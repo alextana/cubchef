@@ -1,8 +1,8 @@
-
+import Container from '../../grid/Container'
 export default function Footer() {
   return (
-    <div>
+    <Container>
       footer
-    </div>
+    </Container>
   )
 }

@@ -1,9 +1,16 @@
+import Logo from './logo/Logo'
+import HeaderSearch from './search/HeaderSearch'
+import HeaderProfile from './profile/HeaderProfile'
+import Container from '../../grid/Container'
 
-export default function Header(props) {
-  console.log('my props', props)
+export default function Header() {
   return (
-    <div>
-      {props.data.map(t => <div>{t.name}, {t.lastName}</div>)}
+    <div className="border-b border-gray-300">
+      <Container>
+        <Logo />
+        <HeaderSearch />
+        <HeaderProfile />
+      </Container>
     </div>
   )
 }
