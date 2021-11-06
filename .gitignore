@@ -1,2 +1,4 @@
 node_modules
 config.js
+.next
+client_old
