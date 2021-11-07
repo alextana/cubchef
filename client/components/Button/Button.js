@@ -1,3 +1,12 @@
+import PropTypes from 'prop-types'
+
+Button.propTypes = {
+  icon: PropTypes.string,
+  type: PropTypes.string,
+  extra: PropTypes.string,
+  onClick: PropTypes.func,
+}
+
 export default function Button({ children, icon, type, extraClass, onClick }) {
   let classToUse = null
   let pathToUse = null
@@ -13,7 +22,7 @@ export default function Button({ children, icon, type, extraClass, onClick }) {
       break
   }
 
-  switch (icon) {
+switch (icon) {
     case 'done':
       pathToUse = 'M5 13l4 4L19 7'
       break
