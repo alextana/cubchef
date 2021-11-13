@@ -11,34 +11,44 @@ function generateToken(user) {
     {
       id: user.id,
       email: user.email,
-      username: user.username
+      username: user.username,
     },
     SECRET_KEY,
     { expiresIn: '1h' }
-  );
+  )
 }
 
 module.exports = {
+  Query: {
+    async getUsers() {
+      try {
+        const users = await User.find().sort({ createdAt: -1 })
+        return users
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
+  },
   Mutation: {
     async login(_, { username, password }) {
-      const {errors, valid} = validateLoginInput(username, password)
+      const { errors, valid } = validateLoginInput(username, password)
       if (!valid) {
         throw new UserInputError('Errors', {
-          errors
+          errors,
         })
       }
       const user = await User.findOne({ username })
       if (!user) {
         errors.general = 'User not found'
         throw new UserInputError('User not found', {
-          errors
+          errors,
         })
       } else {
         const match = await argon2.verify(user.password, password)
         if (!match) {
           errors.general = 'Wrong credentials'
           throw new UserInputError('Wrong credentials', {
-            errors
+            errors,
           })
         }
 

@@ -5,11 +5,11 @@ import Profile from '../Header/Profile'
 
 export default function Navbar() {
   return (
-    <nav className="border-b border-gray-300">
-      <Container extraClass="flex items-center justify-between py-3">
-        <Logo/>
-        <Search/>
-        <Profile/>
+    <nav className="">
+      <Container extraClass="flex items-center py-3 gap-6">
+        <Logo extraClass="flex-initial" />
+        <Search />
+        <Profile extraClass="ml-auto" />
       </Container>
     </nav>
   )

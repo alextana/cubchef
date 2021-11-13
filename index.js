@@ -17,5 +17,5 @@ mongoose
     return server.listen({ port: 6600 })
   })
   .then((res) => {
-    console.log('server listening on ' + res.url)
+    console.log('Apollo server listening on ' + res.url)
   })
