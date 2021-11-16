@@ -5,6 +5,8 @@ const { SECRET_KEY } = require('../../config')
 const { UserInputError } = require('apollo-server')
 const { validateRegisterInput } = require('../../util/validators')
 const { validateLoginInput } = require('../../util/validators')
+// const { sendEmail } = require('../../util/send-email')
+const { createConfirmationUrl } = require('../../util/create-confirmation-url')
 
 function generateToken(user) {
   return jwt.sign(
@@ -30,7 +32,7 @@ module.exports = {
     },
   },
   Mutation: {
-    async login(_, { username, password }) {
+    async login(_, { username, password }, {res}) {
       const { errors, valid } = validateLoginInput(username, password)
       if (!valid) {
         throw new UserInputError('Errors', {
@@ -51,8 +53,13 @@ module.exports = {
             errors,
           })
         }
+        // if (!user.confirmed) {
+        //   errors.general = 'User not confirmed'
+        //   throw new UserInputError('User not confirmed', {
+        //     errors,
+        //   })
+        // }
 
-        const token = generateToken(user)
         return {
           ...user._doc,
           id: user._id,
@@ -96,6 +103,8 @@ module.exports = {
         })
         const res = await newUser.save()
         const token = generateToken(res)
+
+        // await sendEmail(email, await createConfirmationUrl(res._id))
 
         return {
           ...res._doc,
