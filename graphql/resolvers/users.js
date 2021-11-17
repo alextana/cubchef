@@ -6,7 +6,7 @@ const { UserInputError } = require('apollo-server')
 const { validateRegisterInput } = require('../../util/validators')
 const { validateLoginInput } = require('../../util/validators')
 // const { sendEmail } = require('../../util/send-email')
-const { createConfirmationUrl } = require('../../util/create-confirmation-url')
+// const { createConfirmationUrl } = require('../../util/create-confirmation-url')
 
 function generateToken(user) {
   return jwt.sign(
@@ -59,6 +59,8 @@ module.exports = {
         //     errors,
         //   })
         // }
+
+        const token = generateToken(user);
 
         return {
           ...user._doc,

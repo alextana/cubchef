@@ -1,13 +1,14 @@
+import React, { useState } from 'react';
 import { useFormik } from 'formik'
+import { useAuth } from '../../lib/auth.js'
 import Input from '../Forms/Input'
 import Button from '../Button/Button'
-import React from 'react'
 import Link from 'next/link'
 import FormError from '../forms/errors/FormError'
-import gql from 'graphql-tag'
-
 
 function LoginForm() {
+  const [loginError, setError] = useState('')
+  const { logIn } = useAuth()
   const validate = (values) => {
     const errors = {}
     if (!values.username) {
@@ -25,16 +26,15 @@ function LoginForm() {
       password: '',
     },
     validate,
-    onSubmit: (values) => {
-      loginUser(values)
+    onSubmit: async (values) => {
+      const res = await logIn({ username: values.username, password: values.password })
+      if (res.length) {
+        setError(res[0].message)
+      } else {
+        setError('')
+      }
     },
   })
-
-  // const [loginUser, {loading}] = useMutation(login, {
-  //   update(_, {data: values}) {
-  //     console.log(values)
-  //   },
-  // })
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -66,6 +66,10 @@ function LoginForm() {
       {formik.errors.password ? (
         <FormError>{formik.errors.password}</FormError>
       ) : null}
+
+      {loginError !== '' ? (
+        <FormError>{loginError}</FormError>
+      ) : null}
       <Button classType="primary" type="submit" extraClass="mt-4">
         Submit
       </Button>
@@ -80,17 +84,5 @@ function LoginForm() {
     </form>
   )
 }
-
-const login = gql`
-  mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      id
-      email
-      username
-      createdAt
-      token
-    }
-  }
-`;
 
 export default LoginForm
