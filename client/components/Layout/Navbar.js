@@ -5,7 +5,7 @@ import Profile from '../Header/Profile'
 
 export default function Navbar() {
   return (
-    <nav className="">
+    <nav>
       <Container extraClass="flex items-center py-3 gap-6">
         <Logo extraClass="flex-initial" />
         <Search />

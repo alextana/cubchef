@@ -5,9 +5,9 @@ RecipeCard.propTypes = {
   vegan: propTypes.bool,
 }
 
-export default function RecipeCard({ children, vegetarian, vegan }) {
+export default function RecipeCard({ children }) {
   return (
-    <div className="transition-all rounded-3xl bg-white p-4 shadow-sm transform hover:scale-105 hover:shadow-2xl">
+    <div className="transition-all rounded-3xl bg-white p-4 transform hover:scale-105 hover:shadow-2xl">
       {children}
     </div>
   )

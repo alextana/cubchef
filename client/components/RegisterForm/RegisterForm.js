@@ -87,7 +87,7 @@ function RegisterForm() {
       <p className="text-sm font-bold text-gray-800 mt-3">
         Already a member?{' '}
         <Link href="/login">
-          <a className="underline font-extrabold hover:text-yellow-500">
+          <a className="underline font-extrabold hover:text-primary">
             Login
           </a>
         </Link>

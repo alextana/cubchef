@@ -1,10 +1,10 @@
 import RecipeCard from './RecipeCard'
 import Button from '../Button/Button'
-import Link from 'next/link'
+import SaveToCupboard from 'components/Actions/SaveToCupboard/SaveToCupboard'
 
 export default function RecipeList({ recipes }) {
   return (
-    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-8">
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-16 mb-8">
       {recipes &&
         recipes.map((recipe) => (
           <RecipeCard
@@ -32,15 +32,16 @@ export default function RecipeList({ recipes }) {
                 <span className="font-extrabold">{recipe.readyInMinutes}m</span>
               </p>
             </div>
-            <div className="recipe-cta">
-              <Link href={`/recipes/${recipe.id}`}>
+            <div className="recipe-cta flex items-center gap-3">
+              <a href={`/recipes/${recipe.id}`}>
                 <Button
                   classType="primary"
                   extraClass="w-48 py-8 text-center mt-4 block"
                 >
                   <span className="text-center font-extrabold">View more</span>
                 </Button>
-              </Link>
+                </a>
+                <SaveToCupboard recipe={recipe} />
             </div>
           </RecipeCard>
         ))}

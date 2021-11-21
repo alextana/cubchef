@@ -1,4 +1,5 @@
 import React, { useState, useContext, createContext } from 'react'
+import { useCookies } from "react-cookie"
 import Router from 'next/router'
 import {
   ApolloProvider,
@@ -28,8 +29,13 @@ export const useAuth = () => {
 
 function useProvideAuth() {
   const [authToken, setAuthToken] = useState(null)
+  const [cookie, setCookie, removeCookie] = useCookies(['user'])
 
   const isSignedIn = () => {
+    if (!authToken && cookie) {
+      setAuthToken(cookie.user)
+    }
+
     if (authToken) {
       return true
     } else {
@@ -45,8 +51,13 @@ function useProvideAuth() {
   }
 
   const getAuthHeaders = () => {
-    if (!authToken) return null
+    if (!authToken && !cookie) return null
 
+    if (!authToken && cookie) {
+      return {
+        Authorization: `Bearer ${cookie.user}`,
+      }
+    }
     return {
       authorization: `Bearer ${authToken}`,
     }
@@ -86,14 +97,24 @@ function useProvideAuth() {
       return result.errors
     }
 
+    const data = result.data
+
+
     if (result?.data?.login?.token) {
-      setAuthToken(result.data.login.token)
+      setAuthToken(data.login.token)
+      setCookie('user', JSON.stringify(data.login.token), {
+        path: '/',
+        maxAge: 3600,
+        sameSite: true,
+      })
       Router.push('/')
       // TODO - add notification dispatch saying login outcome
+      // TODO - add cookie to make auth persistent
     }
   }
 
   const logOut = () => {
+    removeCookie('user')
     setAuthToken(null)
     Router.push('/')
     // TODO - add notification dispatch saying logout outcome

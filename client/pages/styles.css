@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800');
 
 body {
-  font-family: 'Nunito'
+  font-family: 'Nunito';
+}
+
+h1 {
+  font-family: 'Montserrat'
 }

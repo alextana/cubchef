@@ -28,7 +28,7 @@ function LoginForm() {
     validate,
     onSubmit: async (values) => {
       const res = await logIn({ username: values.username, password: values.password })
-      if (res.length) {
+      if (res?.length) {
         setError(res[0].message)
       } else {
         setError('')
@@ -76,7 +76,7 @@ function LoginForm() {
       <p className="text-sm font-bold text-gray-800 mt-3">
         Don't have an account? {' '}
         <Link href="/register">
-          <a className="underline font-extrabold hover:text-yellow-500">
+          <a className="underline font-extrabold hover:text-primary">
             Register
           </a>
         </Link>

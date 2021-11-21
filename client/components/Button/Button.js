@@ -21,7 +21,7 @@ export default function Button({
 
   switch (classType) {
     case 'primary':
-      classToUse = `bg-yellow-500 px-6 py-3 rounded-2xl text-white block hover:bg-yellow-600`
+      classToUse = `bg-primary px-6 py-3 rounded-2xl text-white block hover:bg-blue-600`
       break
     case 'secondary':
       classToUse = `bg-gray-500 px-6 py-3 rounded-2xl text-white block hover:bg-gray-600`
