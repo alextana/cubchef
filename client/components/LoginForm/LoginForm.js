@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik'
 import { useAuth } from '../../lib/auth.js'
 import Input from '../Forms/Input'
-import Button from '../Button/Button'
+import Button from '../Buttons/Button/Button'
 import Link from 'next/link'
 import FormError from '../forms/errors/FormError'
 

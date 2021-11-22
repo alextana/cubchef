@@ -131,8 +131,8 @@ function BreakfastSVG() {
         y2="280.58579"
         fill="none"
         stroke="#000"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeMiterlimit="10"
+        strokeWidth="2"
         opacity="0.1"
       />
       <line
@@ -142,8 +142,8 @@ function BreakfastSVG() {
         y2="291.7398"
         fill="none"
         stroke="#000"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeMiterlimit="10"
+        strokeWidth="2"
         opacity="0.1"
       />
       <line
@@ -153,8 +153,8 @@ function BreakfastSVG() {
         y2="280.58579"
         fill="none"
         stroke="#000"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeMiterlimit="10"
+        strokeWidth="2"
         opacity="0.1"
       />
       <line
@@ -164,8 +164,8 @@ function BreakfastSVG() {
         y2="264.6515"
         fill="none"
         stroke="#000"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeMiterlimit="10"
+        strokeWidth="2"
         opacity="0.1"
       />
       <line
@@ -175,8 +175,8 @@ function BreakfastSVG() {
         y2="260.66793"
         fill="none"
         stroke="#000"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeMiterlimit="10"
+        strokeWidth="2"
         opacity="0.1"
       />
       <line
@@ -186,8 +186,8 @@ function BreakfastSVG() {
         y2="287.75623"
         fill="none"
         stroke="#000"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeMiterlimit="10"
+        strokeWidth="2"
         opacity="0.1"
       />
       <path

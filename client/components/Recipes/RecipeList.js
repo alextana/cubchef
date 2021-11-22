@@ -1,5 +1,5 @@
 import RecipeCard from './RecipeCard'
-import Button from '../Button/Button'
+import Button from '../Buttons/Button/Button'
 import SaveToCupboard from 'components/Actions/SaveToCupboard/SaveToCupboard'
 
 export default function RecipeList({ recipes }) {

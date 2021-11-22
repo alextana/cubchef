@@ -9,7 +9,9 @@ function Heading({ children, type, extraClass = '' }) {
         </h1>
       )}
       {type === 'h2' && <h2>{children}</h2>}
-      {type === 'h3' && <h3>{children}</h3>}
+      {type === 'h3' && (
+        <h3 className="text-gray-600 font-extrabold text-2xl mb-3">{children}</h3>
+      )}
       {type === 'h4' && <h4>{children}</h4>}
       {type === 'recipe-h2' && <h2 className="text-gray-600 text-xl font-normal tracking-tighter">{children}</h2>}
     </>

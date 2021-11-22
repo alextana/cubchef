@@ -1,13 +1,52 @@
 import { useFormik } from 'formik'
 import Input from '../Forms/Input'
-import Button from '../Button/Button'
-import React from 'react'
+import Button from '../Buttons/Button/Button'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import FormError from '../forms/errors/FormError'
+import { gql, useMutation } from '@apollo/client'
+
+const REGISTER = gql`
+  mutation register(
+    $username: String!
+    $email: String!
+    $password: String!
+    $confirmPassword: String!
+  ) {
+    register(
+      registerInput: {
+        username: $username
+        email: $email
+        password: $password
+        confirmPassword: $confirmPassword
+      }
+    ) {
+      id
+      email
+      username
+      createdAt
+      token
+    }
+  }
+`
 
 function RegisterForm() {
+  const [register, { data, error, loading }] = useMutation(REGISTER, {
+    errorPolicy: 'all',
+  })
+  const handleSuccess = (data) => {
+    // TODO send notification of success then redirect to homepage
+    console.log(data)
+  }
+  const handleError = (error) => {
+    // TODO send notification of error
+    console.log(error)
+  }
   const validate = (values) => {
     const errors = {}
+    if (!values.username) {
+      errors.username = 'Username is required'
+    }
     if (!values.email) {
       errors.email = 'Email is required'
     } else if (
@@ -27,18 +66,42 @@ function RegisterForm() {
   }
   const formik = useFormik({
     initialValues: {
+      username: '',
       email: '',
-      password: '',
       confirmPassword: '',
+      password: '',
     },
     validate,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
-      console.log(formik.errors)
+    onSubmit: async (values) => {
+      register({
+        variables: {
+          username: values.username,
+          email: values.email,
+          password: values.password,
+          confirmPassword: values.confirmPassword,
+        },
+      }).then(
+        (res) => handleSuccess(res),
+        (err) => handleError(err)
+      )
     },
   })
   return (
     <form onSubmit={formik.handleSubmit}>
+      <Input
+        label="Username"
+        htmlFor="username"
+        id="username"
+        inputName="username"
+        type="text"
+        onChange={formik.handleChange}
+        value={formik.values.username}
+        placeHolder="Enter your username"
+        extraClass="w-full"
+      />
+      {formik.errors.username ? (
+        <FormError>{formik.errors.username}</FormError>
+      ) : null}
       <Input
         label="Email Address"
         htmlFor="email"
@@ -81,15 +144,20 @@ function RegisterForm() {
       {formik.errors.confirmPassword ? (
         <FormError>{formik.errors.confirmPassword}</FormError>
       ) : null}
+
+      {error?.graphQLErrors?.map(({ message }, i) => (
+        <span key={i}>
+          <FormError>{message}</FormError>
+        </span>
+      ))}
+
       <Button classType="primary" type="submit" extraClass="mt-4">
         Submit
       </Button>
       <p className="text-sm font-bold text-gray-800 mt-3">
         Already a member?{' '}
         <Link href="/login">
-          <a className="underline font-extrabold hover:text-primary">
-            Login
-          </a>
+          <a className="underline font-extrabold hover:text-primary">Login</a>
         </Link>
       </p>
     </form>
