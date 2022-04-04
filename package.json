@@ -1,26 +1,40 @@
 {
-  "name": "cubchef",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "serve": "node index.js",
-    "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "apollo-server": "^3.4.1",
-    "argon2": "^0.28.2",
-    "cookie-parser": "^1.4.5",
-    "express": "^4.17.1",
-    "graphql": "^15.6.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.12",
-    "nodemailer": "^6.7.0",
-    "nodemon": "^2.0.14",
-    "uuid": "^8.3.2"
-  }
+	"name": "cubchef",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "svelte-kit dev",
+		"build": "svelte-kit build",
+		"package": "svelte-kit package",
+		"preview": "svelte-kit preview",
+		"prepare": "svelte-kit sync",
+		"lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
+		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "next",
+		"@sveltejs/kit": "next",
+		"autoprefixer": "^10.4.2",
+		"eslint": "^7.32.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-svelte3": "^3.2.1",
+		"postcss": "^8.4.5",
+		"postcss-load-config": "^3.1.1",
+		"prettier": "^2.5.1",
+		"prettier-plugin-svelte": "^2.5.0",
+		"prisma": "^3.11.1",
+		"svelte": "^3.44.0",
+		"svelte-preprocess": "^4.10.1",
+		"tailwindcss": "^3.0.12"
+	},
+	"type": "module",
+	"dependencies": {
+		"@prisma/client": "^3.11.1",
+		"argon2": "^0.28.5",
+		"cookie-parser": "^1.4.6",
+		"cors": "^2.8.5",
+		"express": "^4.17.3",
+		"nodemailer": "^6.7.3",
+		"uuid": "^8.3.2",
+		"yup": "^0.32.11"
+	}
 }
