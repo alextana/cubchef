@@ -1,4 +1,8 @@
+.DS_Store
 node_modules
-config.js
-.next
-client_old
+/build
+/.svelte-kit
+/package
+.env
+.env.*
+!.env.example

@@ -1,6 +1,5 @@
 <script>
 	export let type = '';
-	export let extraClass = '';
 	let classToUse = '';
 
 	switch (type) {
@@ -15,6 +14,6 @@
 	}
 </script>
 
-<button on:click class="{extraClass} {classToUse} cursor-pointer" on:click>
+<button on:click type="submit" class="{classToUse} cursor-pointer" on:click>
 	<slot />
 </button>

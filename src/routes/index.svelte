@@ -6,7 +6,7 @@
 
 	$: console.log($recipes);
 
-	let isLoggedIn = false;
+	let isLoggedIn = true;
 
 	function setImageError(e) {
 		e.target.src = 'https://via.placeholder.com/150';
