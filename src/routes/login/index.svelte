@@ -1,9 +1,32 @@
+<script context="module">
+	export async function load({ session }) {
+		if (!session?.authenticated) {
+			return {
+				props: {
+					session
+				}
+			};
+		}
+		return {
+			props: {
+				status: 302,
+				redirect: '/'
+			}
+		};
+	}
+</script>
+
 <script>
 	import Container from '$lib/components/ui/container/Container.svelte';
 	import InputText from '$lib/components/ui/forms/InputText.svelte';
 	import InputError from '$lib/components/ui/forms/InputError.svelte';
 	import * as Yup from 'yup';
 	import { extractErrors } from '$lib/components/utils/extractErrors.js';
+	import { goto } from '$app/navigation';
+	import { session } from '$app/stores';
+
+	// export let session;
+	let loggedIn = false;
 
 	let values = {
 		email: '',
@@ -56,20 +79,24 @@
 		} catch (error) {
 			console.error(error);
 		}
+		loggedIn = true;
+
+		session.set({
+			authenticated: true,
+			email: values.email
+		});
+
+		goto('/');
 	}
 </script>
 
-<Container extraClass="my-8 bg-gray-100 p-6 rounded-xl w-2/3">
-	<h1 class="font-extrabold mb-8 text-5xl tracking-tighter text-gray-700">Login</h1>
+<Container extraClass="my-8 bg-gray-100 p-6 rounded-xl">
 	<form on:submit|preventDefault={handleSubmit}>
 		<InputText bind:value={values.email} label="email" />
-
 		{#if errors.email}
 			<InputError>{errors.email}</InputError>
 		{/if}
-
 		<InputText bind:value={values.password} label="password" />
-
 		{#if errors.password}
 			<InputError>{errors.password}</InputError>
 		{/if}

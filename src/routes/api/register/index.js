@@ -1,6 +1,7 @@
 import argon2 from 'argon2'
 import { v4 as uuidv4 } from 'uuid';
 import nodemailer from 'nodemailer'
+import * as cookie from 'cookie'
 
 import pkg from '@prisma/client';
 const { PrismaClient } = pkg
@@ -58,15 +59,25 @@ export async function post({ request }) {
     }
   }
 
-  const user = await prisma.user.create({
-    data: {
-      name,
-      email,
-      password: hash,
-      registered_at: new Date(),
-      verificationCode,
-    },
-  })
+  let user = null
+  let cookieId = null
+
+  try {
+    user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hash,
+        registered_at: new Date(),
+        verificationCode,
+      },
+    })
+  } catch (error) {
+    return {
+      status: 500,
+      body: 'Unexpected error',
+    }
+  }
 
   if (!user) {
     return {
@@ -74,9 +85,33 @@ export async function post({ request }) {
       body: 'Could not create user',
     }
   } else {
+    // user created, set cookie
+    try {
+      cookieId = uuidv4()
+      await prisma.user.update({
+        where: {
+          id: user.id,
+        }, data: {
+          session_id: cookieId,
+        }
+      })
+    } catch (error) {
+      console.error('Could not set cookie for session')
+    }
+
+    // cookie created, set header
+    const headers = {
+      'Set-Cookie': cookie.serialize('session_id', cookieId, {
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 7,
+        path: '/',
+        sameSite: 'lax',
+      })
+    
     // user created, send email
     main(name, email, verificationCode).catch(console.error);
     return {
+      headers,
       status: 200,
       body: user,
     }

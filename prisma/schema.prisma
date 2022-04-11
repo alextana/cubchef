@@ -18,4 +18,5 @@ model User {
   registered_at    DateTime
   verificationCode  String @default(uuid())
   verified          Boolean @default(false)
+  session_id       String? @default(uuid())
 }

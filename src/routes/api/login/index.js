@@ -1,5 +1,6 @@
 import argon2 from 'argon2'
-// import cookie from 'cookie'
+import { v4 as uuidv4 } from 'uuid';
+import * as cookie from 'cookie'
 
 import pkg from '@prisma/client';
 const { PrismaClient } = pkg
@@ -28,8 +29,26 @@ export async function post({ request }) {
         }
       } else {
         // create token
+        const cookieId = uuidv4()
+        await prisma.user.update({
+          where: {
+            id: user.id,
+          }, data: {
+            session_id: cookieId,
+          }
+        })
+        // cookie created, set header
+        const headers = {
+          'Set-Cookie': cookie.serialize('session_id', cookieId, {
+            httpOnly: true,
+            maxAge: 60 * 60 * 24 * 7,
+            path: '/',
+            sameSite: 'lax',
+          })
+        }
         return {
           status: 200,
+          headers,
           body: user,
         }
       }
@@ -42,17 +61,10 @@ export async function post({ request }) {
     }
   } catch (err) {
     // internal failure
+    console.error(err)
     return {
       status: 500,
       body: 'Unexpected error',
     }
   }
-
-  // if (!user) {
-  //   return res.status(401).send('Invalid credentials')
-  // } else if (!user.verified) {
-  //   return res.status(401).send('Please verify your email first')
-  // } else {
-  //   return res.json('Logged in')
-  // }
 }

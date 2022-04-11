@@ -1,3 +1,20 @@
+<script context="module">
+	export async function load({ session }) {
+		console.log('sesh', session);
+		if (!session?.authenticated) {
+			return {
+				status: 302
+				// redirect: '/login?unauthorized=true'
+			};
+		}
+		return {
+			props: {
+				email: session.email
+			}
+		};
+	}
+</script>
+
 <script>
 	import Container from '$lib/components/ui/container/Container.svelte';
 	import { recipes } from '$lib/stores/recipes';
