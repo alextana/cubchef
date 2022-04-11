@@ -107,8 +107,7 @@ export async function post({ request }) {
         path: '/',
         sameSite: 'lax',
       })
-    }
-
+    
     // user created, send email
     main(name, email, verificationCode).catch(console.error);
     return {
