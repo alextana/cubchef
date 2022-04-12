@@ -1,6 +1,5 @@
 <script context="module">
 	export async function load({ session }) {
-		console.log(session);
 		if (!session?.authenticated) {
 			return {
 				props: {
@@ -60,7 +59,6 @@
 		});
 
 		if (res.ok) {
-			console.log('res is ok??');
 			const user = await res.json();
 			session.set({
 				authenticated: true,

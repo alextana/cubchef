@@ -20,7 +20,6 @@ export async function post({ request }) {
   // try to match password
   try {
     if (await argon2.verify(user.password, password)) {
-      console.log('pwd match')
       // password match
       // check if user is verified
       if (!user.verified) {
@@ -55,7 +54,6 @@ export async function post({ request }) {
       }
     } else {
       // password did not match
-      console.log('invalid!!!')
       return {
         status: 401,
         body: 'Invalid credentials',
