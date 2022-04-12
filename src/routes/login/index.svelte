@@ -1,5 +1,6 @@
 <script context="module">
 	export async function load({ session }) {
+		console.log(session);
 		if (!session?.authenticated) {
 			return {
 				props: {
@@ -59,10 +60,17 @@
 		});
 
 		if (res.ok) {
+			console.log('res is ok??');
 			const user = await res.json();
-			return user;
+			session.set({
+				authenticated: true,
+				email: user.email
+			});
+			loggedIn = true;
+
+			goto('/');
 		} else {
-			console.log(await res.json());
+			throw new Error('Something went wrong');
 		}
 	}
 
@@ -74,19 +82,15 @@
 			errors = extractErrors(error);
 		}
 
+		if (Object.keys(errors).length > 0) {
+			return;
+		}
+
 		try {
 			login(values.email, values.password);
 		} catch (error) {
 			console.error(error);
 		}
-		loggedIn = true;
-
-		session.set({
-			authenticated: true,
-			email: values.email
-		});
-
-		goto('/');
 	}
 </script>
 
