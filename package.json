@@ -30,6 +30,7 @@
 	"type": "module",
 	"dependencies": {
 		"@prisma/client": "^3.11.1",
+		"@sveltejs/adapter-node": "^1.0.0-next.73",
 		"argon2": "^0.28.5",
 		"cookie": "^0.4.2",
 		"cookie-parser": "^1.4.6",
