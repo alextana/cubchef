@@ -1,5 +1,6 @@
 <script>
 	export let value = null;
+	export let type = null;
 	export let label = '';
 	export let widthClass = 'w-full';
 </script>
@@ -10,8 +11,16 @@
 	</label>
 {/if}
 
-<input
-	type="text"
-	class="{widthClass} block px-4 py-4 rounded-2xl border border-gray-200 mb-4 text-sm"
-	bind:value
-/>
+{#if type === 'password'}
+	<input
+		type="password"
+		class="{widthClass} block px-4 py-4 rounded-2xl border border-gray-200 mb-4 text-sm"
+		bind:value
+	/>
+{:else}
+	<input
+		type="text"
+		class="{widthClass} block px-4 py-4 rounded-2xl border border-gray-200 mb-4 text-sm"
+		bind:value
+	/>
+{/if}

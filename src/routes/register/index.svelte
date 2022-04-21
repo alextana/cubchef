@@ -1,25 +1,58 @@
 <script>
+	import { browser } from '$app/env';
 	import { onMount } from 'svelte';
 	import Container from '$lib/components/ui/container/Container.svelte';
 	import InputText from '$lib/components/ui/forms/InputText.svelte';
-	import Breakfast from '$lib/components/assets/register/Breakfast.svelte';
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/ui/button/Button.svelte';
+	import InputError from '$lib/components/ui/forms/InputError.svelte';
+	import { extractErrors } from '$lib/components/utils/extractErrors.js';
 
-	let password = null;
-	let email = null;
-	let username = null;
+	import * as Yup from 'yup';
+
+	let values = {
+		username: '',
+		email: '',
+		password: '',
+		confirmPassword: ''
+	};
+
+	let key = null;
+
+	let errors = {};
+
+	const schema = Yup.object().shape({
+		email: Yup.string().email('Invalid email').required('Email is required'),
+		password: Yup.string()
+			.min(3, 'Password must be at least 3 characters')
+			.required('Password is required'),
+		confirmPassword: Yup.string()
+			.oneOf([Yup.ref('password'), null], 'Passwords must match')
+			.required('Confirm password is required')
+	});
+
+	let randomRecipe = null;
+
+	// button state
+	let buttonLoading = false;
+	let buttonError = false;
+	let buttonDone = false;
 
 	let registeredUser = null;
 
-	// debug
-	// let registeredUser = {
-	// 	name: 'test',
-	// 	email: 'test@test.com'
-	// };
-
 	async function register(username, email, password) {
-		if (!username || !email || !password) {
+		key = Math.floor(Math.random() * 1000000);
+		buttonLoading = true;
+		errors = {};
+
+		try {
+			await schema.validate(values, { abortEarly: false });
+		} catch (error) {
+			buttonError = true;
+			errors = extractErrors(error);
+		}
+
+		if (Object.keys(errors).length > 0) {
 			return;
 		}
 
@@ -33,48 +66,66 @@
 		});
 
 		if (res.ok) {
+			buttonDone = true;
 			registeredUser = await res.json();
 			return registeredUser;
 		} else {
+			buttonError = true;
 			throw new Error('Something went wrong');
 		}
 	}
 
-	async function getUsers() {
-		const res = await fetch('http://localhost:5001/users');
-		const users = await res.json();
-
-		if (res.ok) {
-			return users;
-		} else {
-			throw new Error('Something went wrong');
+	async function getRecipe() {
+		try {
+			const res = await fetch('/api/recipes?take=1');
+			randomRecipe = await res.json();
+			randomRecipe = randomRecipe[0];
+		} catch (error) {
+			console.error(error);
 		}
 	}
 
 	onMount(async () => {
-		getUsers();
+		if (browser) {
+			getRecipe();
+		}
 	});
 </script>
 
 <Container extraClass="my-8">
 	{#if !registeredUser}
-		<h1 class="text-5xl text-gray-700 tracking-tighter font-extrabold mb-8 xl:mt-32">Register</h1>
-		<div class="register w-2/3 flex items-start justify-between">
-			<div class="form w-full">
-				<InputText bind:value={username} label="username" />
-				<InputText bind:value={email} label="email" />
-				<InputText bind:value={password} label="password" />
+		<div class="register w-full flex gap-6 items-center justify-center xl:mt-32">
+			<div class="form flex-initial w-96">
+				<h1 class="text-5xl text-gray-700 tracking-tighter font-extrabold mb-8">Register</h1>
+				<InputText bind:value={values.username} label="username" />
+				<InputText bind:value={values.email} label="email" />
+				{#if errors.email}
+					<InputError>{errors.email}</InputError>
+				{/if}
+				<InputText type="password" bind:value={values.password} label="password" />
+				{#if errors.password}
+					<InputError>{errors.password}</InputError>
+				{/if}
+				<InputText type="password" bind:value={values.confirmPassword} label="Confirm Password" />
+				{#if errors.confirmPassword}
+					<InputError>{errors.confirmPassword}</InputError>
+				{/if}
 				<div class="submit-button">
-					<button
-						class="bg-blue-500 mb-4 w-max hover:bg-blue-700 text-white py-2 px-6 rounded-xl"
-						on:click={() => register(username, email, password)}
-					>
-						Submit
-					</button>
+					{#key key}
+						<Button
+							loading={buttonLoading}
+							error={buttonError}
+							done={buttonDone}
+							on:click={() => register(values.username, values.email, values.password)}
+							>Submit</Button
+						>
+					{/key}
 				</div>
 			</div>
-			<div class="image w-full">
-				<Breakfast />
+			<div class="image w-max rounded-3xl overflow-hidden h-full bg-blue-200">
+				{#if randomRecipe}
+					<img src={randomRecipe.image} alt={randomRecipe.name} />
+				{/if}
 			</div>
 		</div>
 	{:else}

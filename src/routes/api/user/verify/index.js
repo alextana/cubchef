@@ -1,4 +1,4 @@
-import pkg from '@prisma/client';
+import pkg from '@prisma/client'
 const { PrismaClient } = pkg
 const prisma = new PrismaClient()
 
@@ -18,17 +18,26 @@ export async function get({ url }) {
     }
   }
 
-  await prisma.user.update({
-    where: {
-      id: user.id,
-    },
-    data: {
-      verified: true,
-    },
-  })
+  if (!user.verified) {
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        verified: true,
+      }
+    })
+    return {
+      status: 200,
+      body: code,
+    }
+  }
 
-  return {
-    status: 200,
-    body: code,
+  else {
+    return {
+      status: 401,
+      body: 'User is already verified',
+      message: 'User is already verified',
+    }
   }
 }

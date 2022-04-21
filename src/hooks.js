@@ -1,9 +1,8 @@
 import * as cookie from 'cookie'
 
-import pkg from '@prisma/client';
+import pkg from '@prisma/client'
 const { PrismaClient } = pkg
 const prisma = new PrismaClient()
-
 
 export async function getSession({ request }) {
   const cookies = cookie.parse(request.headers.get('cookie') || '')
@@ -16,6 +15,7 @@ export async function getSession({ request }) {
 
   const userSession = await prisma.user.findFirst({
     where: {
+      verified: true,
       session_id: cookies.session_id,
     },
   })
