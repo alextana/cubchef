@@ -94,7 +94,9 @@
 
 <Container extraClass="my-8">
 	{#if !registeredUser}
-		<div class="register w-full flex gap-6 items-center justify-center xl:mt-32">
+		<div
+			class="register w-full bg-white p-6 shadow-2xl rounded-2xl grid grid-cols-1 lg:grid-cols-2 gap-6 items-center justify-center xl:mt-4"
+		>
 			<div class="form flex-initial w-96">
 				<h1 class="text-5xl text-gray-700 tracking-tighter font-extrabold mb-8">Register</h1>
 				<InputText bind:value={values.username} label="username" />
@@ -110,6 +112,9 @@
 				{#if errors.confirmPassword}
 					<InputError>{errors.confirmPassword}</InputError>
 				{/if}
+				<div class="already-got-account flex justify-end">
+					<a class="text-blue-500 hover:text-blue-600" href="/login"> Already have an account? </a>
+				</div>
 				<div class="submit-button">
 					{#key key}
 						<Button
@@ -122,9 +127,11 @@
 					{/key}
 				</div>
 			</div>
-			<div class="image w-max rounded-3xl overflow-hidden h-full bg-blue-200">
+			<div class="image w-full rounded-3xl overflow-hidden h-max bg-blue-200">
 				{#if randomRecipe}
 					<img src={randomRecipe.image} alt={randomRecipe.name} />
+				{:else}
+					<div class="bg-gray-200 skeleton block" />
 				{/if}
 			</div>
 		</div>
@@ -160,3 +167,24 @@
 		</div>
 	{/if}
 </Container>
+
+<style>
+	.skeleton {
+		display: block;
+		width: 832px;
+		height: 468px;
+		max-width: 100%;
+		animation: shine-lines 1.2s infinite linear;
+		background-image: linear-gradient(90deg, #ddd 0px, #e8e8e8 80px, #ddd 80px);
+		background-size: 800px;
+	}
+	@keyframes shine-lines {
+		0% {
+			background-position: -100px;
+		}
+		40%,
+		100% {
+			background-position: 650px;
+		}
+	}
+</style>
