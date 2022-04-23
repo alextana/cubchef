@@ -53,7 +53,7 @@ export async function post({ request }) {
   } catch (error) {
     return {
       status: 500,
-      body: 'Unexpected error',
+      body: 'Unexpected error hashing password',
     }
   }
 
