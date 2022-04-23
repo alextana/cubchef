@@ -73,7 +73,7 @@ export async function post({ request }) {
   } catch (error) {
     return {
       status: 500,
-      body: 'Unexpected error connecting to prisma',
+      body: 'Unexpected error connecting to prisma', error,
     }
   }
 
