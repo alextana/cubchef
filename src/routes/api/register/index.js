@@ -29,7 +29,7 @@ async function main(name, email, verificationCode) {
     text: "Hello, this email is used to verify your account", // plain text body
     html: `
       <b>Hello ${name}, please verify your email by clicking on
-      <a href="http://localhost:3000/user/verify?code=${verificationCode}">this link</a></b>
+      <a href="${process.env.APP_SITE}/user/verify?code=${verificationCode}">this link</a></b>
     `, // html body
   })
 
