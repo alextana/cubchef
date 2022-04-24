@@ -1,40 +1,14 @@
-# create-svelte
+# Cubchef
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Cubchef is a web application that lets you find recipes based on what ingredients you have in your pantry - the recipes have been taken from bbc.co.uk, it's just a personal learning project so not aiming to make a profit with this.
 
-## Creating a project
+Tech stack used:
 
-If you're seeing this, you've probably already done this step. Congrats!
+- SvelteKit -> deals with the front end and API endpoints, auth controller etc.
+- Node/Express -> powers the API which is being hosted somewhere else, connected to a database with all the recipes scraped from bbc.co.uk
+- Prisma/PostgreSQL -> Prisma is an ORM which I used to connect PSQL to my front end and PSQL is the database used for both Cubchef and the Recipe API
 
-```bash
-# create a new project in the current directory
-npm init svelte@next
 
-# create a new project in my-app
-npm init svelte@next my-app
-```
+If you'd like to check the site out whilst it's still in the works you can do so here:
+[Cubchef Website](https://cubchef-app.herokuapp.com/)
 
-> Note: the `@next` is temporary
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
