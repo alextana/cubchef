@@ -1,7 +1,7 @@
 <script>
 	import { scale } from 'svelte/transition';
 	import { goto } from '$app/navigation';
-	export let recipes = null;
+	import { recipes } from '$lib/stores/recipes';
 
 	function setImageError(e) {
 		e.target.src = 'https://via.placeholder.com/150';
@@ -11,8 +11,8 @@
 <div
 	class="cursor-pointer recipes auto-rows-max my-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
 >
-	{#if recipes.length}
-		{#each recipes || [] as recipe, i}
+	{#if $recipes?.length}
+		{#each $recipes || [] as recipe, i}
 			{#if recipe}
 				<div
 					on:click={() => goto(`/recipes/${recipe.recipe_id}`)}
@@ -96,6 +96,8 @@
 				</div>
 			{/if}
 		{/each}
+	{:else if !$recipes}
+		no recipes
 	{:else}
 		{#each Array(20).fill({}) as loadingSkeleton}
 			<div class="recipe-card group h-full bg-transparent relative mb-2">

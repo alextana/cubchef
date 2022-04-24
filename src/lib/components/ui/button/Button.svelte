@@ -44,27 +44,35 @@
 
 	const primary = `
     bg-blue-500 text-md text-white text-left
-    w-max pl-4 ${icon || svgIcon ? 'pr-12' : 'pr-4'} py-4 rounded-2xl cursor-pointer
+    w-max pl-4 ${
+			icon || svgIcon || done || error || loading ? 'pr-12' : 'pr-4'
+		} py-4 rounded-2xl cursor-pointer
     hover:bg-blue-600
     focus:ring-2 focus:outline-none focus:ring-blue-800 focus:ring-opacity-50
   `;
 	const secondary = `
     bg-gray-500 text-md text-white text-left
-    w-max pl-4 ${icon || svgIcon ? 'pr-12' : 'pr-4'} py-4 rounded-2xl cursor-pointer
+    w-max pl-4 ${
+			icon || svgIcon || done || error || loading ? 'pr-12' : 'pr-4'
+		} py-4 rounded-2xl cursor-pointer
     hover:bg-gray-600
     focus:ring-2 focus:outline-none focus:ring-gray-800 focus:ring-opacity-50
   `;
 
 	const warning = `
     bg-red-500 text-md text-white text-left
-    w-max pl-4 ${icon || svgIcon ? 'pr-12' : 'pr-4'} py-4 rounded-2xl cursor-pointer
+    w-max pl-4 ${
+			icon || svgIcon || done || error || loading ? 'pr-12' : 'pr-4'
+		} py-4 rounded-2xl cursor-pointer
     hover:bg-red-600
     focus:ring-2 focus:outline-none focus:ring-red-800 focus:ring-opacity-50
   `;
 
 	const success = `
     bg-green-500 text-md text-white text-left
-    w-max pl-4 ${icon || svgIcon ? 'pr-12' : 'pr-4'} py-4 rounded-2xl cursor-pointer
+    w-max pl-4 ${
+			icon || svgIcon || done || error || loading ? 'pr-12' : 'pr-4'
+		} py-4 rounded-2xl cursor-pointer
     hover:bg-green-600
     focus:ring-2 focus:outline-none focus:ring-green-800 focus:ring-opacity-50
   `;

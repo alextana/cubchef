@@ -2,10 +2,14 @@ const config = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 
 	theme: {
-		extend: {}
+		extend: {
+			transitionProperty: {
+				'width': 'width'
+			},
+		}
 	},
 
 	plugins: []
-};
+}
 
-module.exports = config;
+module.exports = config

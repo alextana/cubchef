@@ -24,6 +24,7 @@ export async function getSession({ request }) {
     return {
       authenticated: true,
       email: userSession.email,
+      name: userSession.name,
     }
   } else {
     return {

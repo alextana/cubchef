@@ -34,6 +34,7 @@
 	let buttonLoading = false;
 	let buttonError = false;
 	let buttonDone = false;
+	let hadError = false;
 
 	let errorMessage = null;
 
@@ -88,6 +89,7 @@
 		} else {
 			if (res.status === 401) {
 				buttonError = true;
+				hadError = true;
 				errorMessage =
 					'Your account has not been verified, please click on the link in the email we sent you to activate your account';
 			}
@@ -116,6 +118,22 @@
 			console.error(error);
 		}
 	}
+
+	async function resendEmail() {
+		if (!values.email) {
+			return;
+		}
+
+		await fetch('/api/resend-email', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				email: values.email
+			})
+		});
+	}
 </script>
 
 <Container extraClass="my-8 bg-gray-100 p-6 rounded-xl">
@@ -135,9 +153,19 @@
 				{#if errorMessage}
 					<div
 						transition:fade={{ duration: 300 }}
-						class="error bg-red-100 border text-sm border-red-300 rounded-lg text-red-600 p-3 w-max mb-4"
+						class="error z-40 bg-red-100 border text-sm border-red-300 rounded-lg text-red-600 p-3 w-max mb-4"
 					>
 						{errorMessage}
+					</div>
+				{/if}
+
+				{#if hadError}
+					<div class="resend mb-4">
+						Did not receive the email? <span
+							class="text-blue-500 hover:text-blue-800"
+							on:click={resendEmail}
+							>Resend
+						</span>
 					</div>
 				{/if}
 
