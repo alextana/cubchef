@@ -1,6 +1,6 @@
 # Cubchef
 
-Cubchef is a web application that lets you find recipes based on what ingredients you have in your pantry - the recipes have been taken from bbc.co.uk, it's just a personal learning project so not aiming to make a profit with this.
+Cubchef is a web application that lets you find recipes based on what ingredients you have in your pantry - the recipes have been scraped from bbc.co.uk, it's just a personal learning project so not aiming to make a profit with this.
 
 Tech stack used:
 
